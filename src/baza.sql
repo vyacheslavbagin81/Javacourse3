@@ -54,7 +54,7 @@ WHERE age < 30
 SELECT *
 FROM employee
 WHERE age BETWEEN 30
-   AND 50;
+          AND 50;
 
 SELECT *
 FROM employee
@@ -63,3 +63,28 @@ ORDER BY last_name DESC;
 SELECT first_name AS Имя, last_name AS Фамилия
 FROM employee
 WHERE char_length(first_name) > 4;
+
+UPDATE employee
+SET first_name = 'Петр'
+WHERE id = 4;
+
+UPDATE employee
+SET first_name = 'Марина'
+WHERE id = 2;
+
+SELECT first_name, SUM(age)
+FROM employee
+GROUP BY first_name;
+
+SELECT first_name, MIN(age)
+FROM employee
+GROUP BY first_name;
+
+WITH Dubl AS (SELECT first_name, COUNT(age) AS COUNT
+FROM employee
+GROUP BY first_name
+HAVING COUNT (*) > 1)
+SELECT first_name, MIN(age)
+FROM employee
+GROUP BY first_name
+HAVING first_name IN (SELECT first_name FROM Dubl);

@@ -126,22 +126,22 @@ WHERE id = 6;
 SELECT employee.first_name, employee.last_name, citi.citi_name
 FROM employee
          INNER JOIN citi
-                    ON employee.id = citi.citi_id;
+                    ON employee.citi_id = citi.citi_id;
 
 SELECT citi.citi_name, employee.first_name, employee.last_name
 FROM employee
          RIGHT JOIN citi
-                    ON employee.id = citi.citi_id;
+                    ON employee.citi_id = citi.citi_id;
 
 SELECT employee.first_name, employee.last_name, citi.citi_name
 FROM employee
          FULL JOIN citi
-                   ON employee.id = citi.citi_id;
+                   ON employee.citi_id = citi.citi_id;
 
 SELECT employee.first_name, citi.citi_name
 FROM employee
          CROSS JOIN citi
-    ON employee.id = citi.citi_id;
+    ON employee.citi_id = citi.citi_id;
 
 SELECT citi_name FROM citi
 WHERE NOT EXISTS(SELECT citi_id

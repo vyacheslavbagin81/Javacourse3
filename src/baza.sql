@@ -88,3 +88,26 @@ SELECT first_name, MIN(age)
 FROM employee
 GROUP BY first_name
 HAVING first_name IN (SELECT first_name FROM Dubl);
+
+CREATE TABLE citi(
+    citi_id BIGSERIAL NOT NULL PRIMARY KEY,
+    citi_name VARCHAR(60) NOT NULL);
+
+INSERT INTO citi (citi_name)
+VALUES ('Москва');
+INSERT INTO citi (citi_name)
+VALUES ('Казань');
+INSERT INTO citi (citi_name)
+VALUES ('Волгоград');
+INSERT INTO citi (citi_name)
+VALUES ('Псков');
+
+ALTER TABLE employee
+    ADD COLUMN citi_id INT REFERENCES citi (citi_id);
+
+UPDATE employee SET citi_id = 1 WHERE id = 2;
+UPDATE employee SET citi_id = 1 WHERE id = 3;
+UPDATE employee SET citi_id = 2 WHERE id = 4;
+UPDATE employee SET citi_id = 3 WHERE id = 5;
+UPDATE employee SET citi_id = 5 WHERE id = 6;
+

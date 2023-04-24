@@ -89,9 +89,11 @@ FROM employee
 GROUP BY first_name
 HAVING first_name IN (SELECT first_name FROM Dubl);
 
-CREATE TABLE citi(
-    citi_id BIGSERIAL NOT NULL PRIMARY KEY,
-    citi_name VARCHAR(60) NOT NULL);
+CREATE TABLE citi
+(
+    citi_id   BIGSERIAL   NOT NULL PRIMARY KEY,
+    citi_name VARCHAR(60) NOT NULL
+);
 
 INSERT INTO citi (citi_name)
 VALUES ('Москва');
@@ -105,9 +107,43 @@ VALUES ('Псков');
 ALTER TABLE employee
     ADD COLUMN citi_id INT REFERENCES citi (citi_id);
 
-UPDATE employee SET citi_id = 1 WHERE id = 2;
-UPDATE employee SET citi_id = 1 WHERE id = 3;
-UPDATE employee SET citi_id = 2 WHERE id = 4;
-UPDATE employee SET citi_id = 3 WHERE id = 5;
-UPDATE employee SET citi_id = 5 WHERE id = 6;
+UPDATE employee
+SET citi_id = 1
+WHERE id = 2;
+UPDATE employee
+SET citi_id = 1
+WHERE id = 3;
+UPDATE employee
+SET citi_id = 2
+WHERE id = 4;
+UPDATE employee
+SET citi_id = 3
+WHERE id = 5;
+UPDATE employee
+SET citi_id = 5
+WHERE id = 6;
 
+SELECT employee.first_name, employee.last_name, citi.citi_name
+FROM employee
+         INNER JOIN citi
+                    ON employee.citi_id = citi.citi_id;
+
+SELECT citi.citi_name, employee.first_name, employee.last_name
+FROM employee
+         RIGHT JOIN citi
+                    ON employee.citi_id = citi.citi_id;
+
+SELECT employee.first_name, employee.last_name, citi.citi_name
+FROM employee
+         FULL JOIN citi
+                   ON employee.citi_id = citi.citi_id;
+
+SELECT employee.first_name, citi.citi_name
+FROM employee
+         CROSS JOIN citi
+    ON employee.citi_id = citi.citi_id;
+
+SELECT citi_name FROM citi
+WHERE NOT EXISTS(SELECT citi_id
+    FROM employee
+    WHERE citi.citi_id = employee.citi_id);
